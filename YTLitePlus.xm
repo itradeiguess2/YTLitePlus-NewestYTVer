@@ -1327,19 +1327,3 @@ NSInteger pageStyle = 0;
 
     }
 }
-
-%hook UIAlertController
-+ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle {
-    if ([title containsString:@"Incompatible"]) {
-        return nil; 
-    }
-    return %orig;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    %orig;
-    if ([self.title containsString:@"Incompatible"]) {
-        [self dismissViewControllerAnimated:NO completion:nil];
-    }
-}
-%end
