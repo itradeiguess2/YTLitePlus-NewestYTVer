@@ -1328,12 +1328,9 @@ NSInteger pageStyle = 0;
     }
 }
 
-%hook UIAlertController
-+ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle {
-    if ([title isEqualToString:@"Incompatible Tweaks Detected"]) {
-        return nil; 
-    }
-    return %orig;
+%hook YTSettingsSectionItemManager
+- (void)applicationDidFinishLaunching:(id)arg1 {
+    %orig;
+    [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ytuhd_enabled"];
 }
 %end
-
