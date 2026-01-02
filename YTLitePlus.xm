@@ -1332,5 +1332,22 @@ NSInteger pageStyle = 0;
 - (void)applicationDidFinishLaunching:(id)arg1 {
     %orig;
     [[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"ytuhd_enabled"];
+
+    void (^dismissBlock)(void) = ^{
+        UIViewController *root = [UIApplication sharedApplication].keyWindow.rootViewController;
+        UIViewController *top = root;
+        while (top.presentedViewController) {
+            top = top.presentedViewController;
+        }
+        if ([top isKindOfClass:[UIAlertController class]]) {
+            UIAlertController *alert = (UIAlertController *)top;
+            if ([alert.title containsString:@"Incompatible"]) {
+                [alert dismissViewControllerAnimated:NO completion:nil];
+            }
+        }
+    };
+
+    dismissBlock();
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), dismissBlock);
 }
 %end
