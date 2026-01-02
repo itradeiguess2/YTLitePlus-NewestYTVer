@@ -732,6 +732,7 @@ static const NSInteger YTLiteSection = 789;
     }
 }
 
+%end
 
 %hook UIAlertController
 - (void)viewDidAppear:(BOOL)animated {
