@@ -1325,13 +1325,15 @@ NSInteger pageStyle = 0;
         [[NSUserDefaults standardUserDefaults] setFloat:1.0 forKey:@"playerGesturesSensitivity"]; 
         [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"playerGesturesHapticFeedback_enabled"]; 
 
-        %hook UIAlertController
-        + (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle {
-            if ([title isEqualToString:@"Incompatible Tweaks Detected"]) {
-                return nil; // Prevents the alert from ever being created
-            }
-            return %orig;
-        }
-        %end
     }
 }
+
+// THIS MUST BE OUTSIDE ALL OTHER BRACKETS
+%hook UIAlertController
++ (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle {
+    if ([title isEqualToString:@"Incompatible Tweaks Detected"]) {
+        return nil; 
+    }
+    return %orig;
+}
+%end
