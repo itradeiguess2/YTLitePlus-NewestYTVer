@@ -732,5 +732,13 @@ static const NSInteger YTLiteSection = 789;
     }
 }
 
-%end
 
+%hook UIAlertController
+- (void)viewDidAppear:(BOOL)animated {
+    %orig;
+    if ([self.title isEqualToString:@"Incompatible Tweaks Detected"] || 
+        [self.title isEqualToString:@"Incompatible Tweak Detected"]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
+%end
