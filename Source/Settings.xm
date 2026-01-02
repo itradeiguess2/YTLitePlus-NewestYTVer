@@ -87,6 +87,7 @@ static const NSInteger YTLiteSection = 789;
 %hook YTSettingsSectionItemManager
 %new(v@:@)
 - (void)updateYTLitePlusSectionWithEntry:(id)entry {
+    return;
     NSMutableArray *sectionItems = [NSMutableArray array];
     NSBundle *tweakBundle = YTLitePlusBundle();
     Class YTSettingsSectionItemClass = %c(YTSettingsSectionItem);
