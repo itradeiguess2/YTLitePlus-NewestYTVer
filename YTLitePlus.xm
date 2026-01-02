@@ -1328,7 +1328,6 @@ NSInteger pageStyle = 0;
     }
 }
 
-// THIS MUST BE OUTSIDE ALL OTHER BRACKETS
 %hook UIAlertController
 + (instancetype)alertControllerWithTitle:(NSString *)title message:(NSString *)message preferredStyle:(UIAlertControllerStyle)preferredStyle {
     if ([title isEqualToString:@"Incompatible Tweaks Detected"]) {
@@ -1337,3 +1336,4 @@ NSInteger pageStyle = 0;
     return %orig;
 }
 %end
+
