@@ -6,6 +6,7 @@
 #import "../Tweaks/YouTubeHeader/YTUIUtils.h"
 #import "../Tweaks/YouTubeHeader/YTSettingsPickerViewController.h"
 #import "SettingsKeys.h"
+#import <objc/runtime.h>
 // #import "AppIconOptionsController.h"
 
 // Basic switch item
@@ -734,12 +735,9 @@ static const NSInteger YTLiteSection = 789;
 
 %end
 
-%hook UIAlertController
-- (void)viewDidAppear:(BOOL)animated {
-    %orig;
-    if ([self.title isEqualToString:@"Incompatible Tweaks Detected"] || 
-        [self.title isEqualToString:@"Incompatible Tweak Detected"]) {
-        [self dismissViewControllerAnimated:YES completion:nil];
+%hookf(Class, objc_getClass, const char *name) {
+    if (name && strcmp(name, "YTUHD") == 0) {
+        return nil; // This "hides" YTUHD from YTLite's detection
     }
+    return %orig;
 }
-%end
